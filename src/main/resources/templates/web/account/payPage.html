@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:include="web/layout :: head"></th:block>
+    <script type="text/javascript" th:src="@{/js/ajaxupload.js}"></script>
+</head>
+<body>
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main">
+        <section class="truyen-section section-featured">
+            <section class="container">
+                <section class="featured-content" id="content">
+                    <section class="row">
+                        <th:block th:include="web/account/navbar_left :: navbar-left"></th:block>
+                        <section class="col-lg-10 col-md-9">
+                            <section class="row">
+                                <section class="col-12">
+                                    <section id="navbar-custom">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs nav-custom" role="tablist">
+                                            <li class="nav-item active">
+                                                <a class="nav-link active" data-toggle="tab"
+                                                   href="#truyen-detail-introduction"
+                                                   role="tab">
+                                                    Nạp Bằng MoMo
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#truyen-detail-story"
+                                                   role="tab">
+                                                    Nạp Bằng ViettelPay
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes {Fade}  -->
+                                        <section class="tab-content">
+                                            <section class="tab-pane fade show active" id="truyen-detail-introduction"
+                                                     name="truyen-detail-introduction" role="tabpanel">
+                                                <section class="row">
+                                                    <section class="col-sm-12">
+                                                        <div class="text-center">
+                                                            <div class="text-center" style="margin-top: 20px;">
+                                                                <p><strong>Bước 1:</strong> Dùng App MoMo quét mã QR bên
+                                                                    dưới</p>
+                                                                <p><img class="img-fluid lazyload"
+                                                                        data-src="https://res.cloudinary.com/thang1988/image/upload/v1543465570/truyenmvc/momo.png"
+                                                                        alt=""></p>
+                                                                <p><strong>Bước 2:</strong> Tại mục chuyển tiền trong
+                                                                    MoMo, nhập nội dung chuyển tiền là: <strong
+                                                                            th:text="${codePay}"></strong> (bắt buộc
+                                                                    phải ghi và chỉ ghi <strong
+                                                                            th:text="${codePay}"></strong>, không thêm
+                                                                    gì khác). Điền số tiền bằng số đậu bạn muốn nạp (1
+                                                                    đậu = 1 đồng)</p>
+                                                                <p><strong>Bước 3:</strong> Số đậu bạn nạp sẽ được cộng
+                                                                    trong 30 phút - 1 giờ</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="alert alert-primary" role="alert">
+                                                            Nếu có lỗi xảy ra xin mời liên hệ admin để giải quyết
+                                                        </div>
+                                                    </section>
+                                                </section>
+                                            </section>
+                                            <section class="tab-pane fade" id="truyen-detail-story"
+                                                     name="truyen-detail-story"
+                                                     role="tabpanel">
+                                                <section class="truyen-detail-chap" id="truyen-detail-chap">
+                                                    <div class="text-center">
+                                                        <div class="text-center" style="margin-top: 20px;">
+                                                            <p><strong>Bước 1:</strong> Dùng App ViettelPay quét mã QR
+                                                                bên dưới</p>
+                                                            <p><img class="img-fluid lazyload"
+                                                                    data-src="https://res.cloudinary.com/thang1988/image/upload/v1543465569/truyenmvc/viettelpay.png"
+                                                                    alt=""></p>
+                                                            <p>hoặc chọn chuyển tiền tới số điện thoại <strong>0366 235
+                                                                661</strong></p>
+                                                            <p><strong>Bước 2:</strong> Tại mục chuyển tiền trong
+                                                                ViettelPay, nhập nội dung chuyển tiền là: <strong
+                                                                        th:text="${codePay}"></strong> (bắt buộc phải
+                                                                ghi và chỉ ghi <strong th:text="${codePay}"></strong>,
+                                                                không thêm gì khác). Điền số tiền bằng số đậu bạn muốn
+                                                                nạp (1 đậu = 1 đồng)</p>
+                                                            <p><strong>Bước 3:</strong> Số đậu bạn nạp sẽ được cộng
+                                                                trong 30 phút - 1 giờ</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="alert alert-primary" role="alert">
+                                                        Nếu có lỗi xảy ra xin mời liên hệ admin để giải quyết
+                                                    </div>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+<script>
+    $('document').ready(function () {
+        $("#frmChangeNick").submit(function (event) {
+
+            // Prevent the form from submitting via the browser.
+            event.preventDefault();
+
+            changeNick();
+
+        });
+        $("#frmupdateabout").submit(function (event) {
+
+            // Prevent the form from submitting via the browser.
+            event.preventDefault();
+
+            updateNotification();
+
+        });
+    });
+</script>
+</body>
+</html>

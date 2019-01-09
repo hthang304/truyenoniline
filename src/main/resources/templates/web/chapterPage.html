@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <th:block th:include="web/layout :: head"></th:block>
+    <!--TinyMCE plugins-->
+    <script type="text/javascript" th:src="@{/bower/tinymce/tinymce.js}"></script>
+    <!--Angular JS-->
+    <script th:src="@{/bower/angular/angular.min.js}"></script>
+    <!--Angular Sanitize JS-->
+    <script th:src="@{/bower/angular-sanitize/angular-sanitize.min.js}"></script>
+    <!-- Angular UI TinyMCE -->
+    <script type="text/javascript" th:src="@{/bower/angular-ui-tinymce/src/tinymce.js}"></script>
+    <!--My AngularJS Controller-->
+    <script th:src="@{/js/controller/homeChapterController.js}"></script>
+    <!--Home AngularJS Service-->
+    <script th:src="@{/js/service/WebService.js}"></script>
+</head>
+<body class="page-read" ng-app="ngApp" ng-controller="chapterCtrl" th:ng-init="|init(${chapter.story.sID})|">
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main">
+        <div class="truyen-breadcrumb">
+            <div class="container">
+                <ol class="breadcrumb" style="background-color: inherit">
+                    <li class="breadcrumb-item">
+                        <a property="item" typeof="WebPage" th:href="@{/}">
+                            <span property="name">Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a th:href="@{'/truyen/' + ${chapter.story.sID}}"
+                           th:text="${chapter.story.vnName}"></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page"
+                        th:text=" 'Chương ' + ${chapter.chNumber} + ': ' + ${chapter.chName}">
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <section class="truyen-section section-read-info">
+            <div class="container">
+                <div class="read-info-block text-center">
+                    <h1 class="title">
+                        <a th:href="@{'/truyen/' + ${chapter.story.sID}}"
+                           th:title="${chapter.story.vnName}"
+                           th:text="${chapter.story.vnName}"></a>
+                    </h1>
+                    <ul class="list-unstyled meta">
+                        <li>
+                            <a class="author js-popover" data-toggle="popover"
+                               data-target="#js-popover-read-author" data-placement="bottom" data-original-title="">
+                                <div class="avatar">
+                                    <img class="img-fluid lazyload"
+                                         th:data-src="${chapter.user.uAvatar}">
+                                </div>
+                                <span th:text="${chapter.user.uDname}"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="item-icon">
+                                <i class="truyen-icon icon-eye-grey"></i>
+                            </span> <span th:text="${chapter.chView}"></span> lượt xem
+                        </li>
+                        <li>
+                            <span class="item-icon">
+                                <i class="truyen-icon icon-list-grey"></i>
+                            </span>
+                            <span th:text="${chapter.wordNumber} + ' Chữ'"></span>
+                        </li>
+                        <li>
+                            <span class="item-icon">
+                                <i class="truyen-icon icon-time-grey"></i>
+                            </span>
+                            <span th:text="${#dates.format(chapter.createDate,'HH:mm - dd/MM/yy')}"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section class="truyen-section section-read-container">
+            <div class="container">
+                <div class="truyen-read-block">
+                    <div class="truyen-read-navigation text-center">
+                        <a th:href="@{'/truyen/' + ${chapter.story.sID} + '/chuong-' + ${preChapter}}"
+                           class="btn btn-primary" th:classappend="${preChapter!=0} ? '': 'disabled'"
+                           data-toggle="tooltip" data-placement="bottom" title="Chương trước">
+                            <span class="btn-icon"> <i class="truyen-icon icon-prev-bold"></i> </span>
+                        </a>
+                        <a href="#modal-chap" data-toggle="modal" class="btn btn-transparent"
+                           onclick="showChapter(16214,2,2,'cuc pham manh nhat cao thu')"> <span
+                                class="btn-icon js-tooltip" data-toggle="tooltip" data-placement="bottom"
+                                title="Danh sách chương"> <i class="truyen-icon icon-list"></i> </span> </a>
+                        <a th:href="@{'/truyen/' + ${chapter.story.sID} + '/chuong-' + ${nextChapter}}"
+                           class="btn btn-primary" th:classappend="${nextChapter!=0} ? '': 'disabled'"
+                           data-toggle="tooltip" data-placement="bottom" title="Chương sau">
+                            <span class="btn-icon"> <i class="truyen-icon icon-next-bold"></i> </span>
+                        </a>
+                    </div>
+                    <div class="truyen-read-content" data-font-family="'Palatino Linotype', sans-serif"
+                         style="width: 100%">
+                        <div class="header">
+                            <h2 class="title" th:text="'Chương ' + ${chapter.chNumber} + ': ' + ${chapter.chName}"></h2>
+                        </div>
+                        <div class="content" id="js-truyen-content"
+                             style="font-size: 26px; line-height: 140%; font-family: 'Palatino Linotype', sans-serif; word-wrap: break-word;">
+                            <div class="content-vip" th:unless="${checkVip}">
+                                <h3 class="text-danger text-center">Đây là chương truyện mất phí,bạn cần trả <strong
+                                        th:text="${chapter.price}"></strong> đậu để
+                                    xem, nếu đồng ý hãy ấn vào nút <strong>MUA</strong> bên dưới. </h3>
+                                <p class="text-center">
+                                    <button class="btn btn-primary"
+                                            th:ng-click="|chapterVip('${chapter.chID}')|">
+                                        MUA
+                                    </button>
+                                </p>
+                                <div class="alert alert-primary col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
+                                    <p class="text-justify small">- Chương truyện sau khi mua bạn có 24 tiếng để đọc,
+                                        sau 24 tiếng nếu muốn đọc lại
+                                        bạn phải mua lại.</p>
+                                    <p class="text-justify small">- Chương truyện này sẽ cho đọc miễn phí sau <strong
+                                            th:text="${chapter.story.STimeDeal}"></strong> ngày kể từ lúc được đăng.</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <th:block th:if="${checkVip}" th:utext="${chapter.content}"></th:block>
+                        </div>
+                    </div>
+                    <div class="truyen-read-navigation text-center">
+                        <a th:href="@{'/truyen/' + ${chapter.story.sID} + '/chuong-' + ${preChapter}}"
+                           class="btn btn-primary" th:classappend="${preChapter!=0} ? '': 'disabled'"
+                           data-toggle="tooltip" data-placement="bottom" title="Chương trước">
+                            <span class="btn-icon"> <i class="truyen-icon icon-prev-bold"></i> </span>
+                        </a>
+                        <a href="#modal-chap" data-toggle="modal" class="btn btn-transparent"
+                           onclick="showChapter(16214,2,2,'cuc pham manh nhat cao thu')"> <span
+                                class="btn-icon js-tooltip" data-toggle="tooltip" data-placement="bottom"
+                                title="Danh sách chương"> <i class="truyen-icon icon-list"></i> </span> </a>
+                        <a th:href="@{'/truyen/' + ${chapter.story.sID} + '/chuong-' + ${nextChapter}}"
+                           class="btn btn-primary" th:classappend="${nextChapter!=0} ? '': 'disabled'"
+                           data-toggle="tooltip" data-placement="bottom" title="Chương sau">
+                            <span class="btn-icon"> <i class="truyen-icon icon-next-bold"></i> </span>
+                        </a>
+                    </div>
+                    <div class="chapter-comment">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <th:block th:include="web/listLayout :: commentOfStory"></th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+<script th:if="${preChapter!=0}">
+    $(document).keydown(function (e) {
+        if (!$(e.target).is(':input, [contenteditable]')) {
+            if (e.keyCode == '37') {
+                window.location = "[[@{/}]]" + "truyen/" + [[${chapter.story.sID}]] + "/chuong-" + [[${preChapter}]];
+            }
+        }
+    })
+</script>
+<script th:if="${nextChapter!=0}">
+    $(document).keydown(function (e) {
+        if (!$(e.target).is(':input, [contenteditable]')) {
+            if (e.keyCode == '39') {
+                window.location = "[[@{/}]]" + "truyen/" + [[${chapter.story.sID}]] + "/chuong-" + [[${nextChapter}]];
+            }
+        }
+    });
+</script>
+</body>
+</html>

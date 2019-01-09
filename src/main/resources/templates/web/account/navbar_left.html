@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title></title>
+</head>
+<body>
+
+<th:block th:fragment="navbar-left">
+    <div class="col-lg-2 col-md-3">
+        <div class="card card-custom bg-truyen text-white">
+            <div class="card-header card-header-custom"
+                 data-toggle="collapse" data-target="#coltaikhoan"
+                 aria-expanded="true">
+                <span class="fas fa-journal-whills fa-lg" aria-hidden="true"></span> Tài khoản <span
+                    class="float-right clickable"><font><span
+                    class="fa fa-chevron-down"></span></font><b><span
+                    class="fa fa-chevron-up"></span></b></span>
+            </div>
+            <div class="list-group" id="coltaikhoan">
+                <a class="list-group-item" th:href="@{/tai-khoan/}">Hồ sơ</a>
+                <a class="list-group-item" th:href="@{/tai-khoan/mat-khau}">Đổi Mật
+                    Khẩu</a>
+                <a class="list-group-item" th:href="@{/tai-khoan/tu-truyen}">Tủ Truyện</a>
+            </div>
+        </div>
+        <div class="card card-custom bg-truyen text-white">
+            <div class="card-header card-header-custom"
+                 data-toggle="collapse" data-target="#coltaisan"
+                 aria-expanded="true">
+                <span class="fas fa-journal-whills fa-lg"></span> Giao Dịch <span
+                    class="float-right clickable"><font><span
+                    class="fa fa-chevron-down"></span></font><b><span
+                    class="fa fa-chevron-up"></span></b></span>
+            </div>
+            <div class="list-group" id="coltaisan">
+                <a class="list-group-item" th:href="@{/tai-khoan/nap-dau}">Nạp Đậu</a>
+                <a class="list-group-item" th:href="@{/tai-khoan/mat-khau}">Log Giao Dịch</a>
+                <a class="list-group-item" th:href="@{/tai-khoan/tu-truyen}"
+                   sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_CONVERTER','ROLE_SMOD')">Rút Tiền</a>
+            </div>
+        </div>
+        <div class="card card-custom bg-truyen text-white"
+             sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_CONVERTER')">
+            <div class="card-header card-header-custom collapsed"
+                 data-toggle="collapse" data-target="#colconverter"
+                 aria-expanded="false">
+                <span class="fas fa-journal-whills fa-lg" aria-hidden="true"></span> Converter <span
+                    class="float-right clickable"><font><span
+                    class="fa fa-chevron-down"></span></font><b><span
+                    class="fa fa-chevron-up"></span></b></span>
+            </div>
+            <div class="list-group collapse" id="colconverter">
+                <a class="list-group-item" th:href="@{/tai-khoan/qly-truyen}">Quản
+                    lý Truyện</a> <a class="list-group-item"
+                                     th:href="@{/tai-khoan/qly-truyen/dang-truyen}">Đăng Truyện</a> <a
+                    class="list-group-item" href="#">Thêm Chương</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

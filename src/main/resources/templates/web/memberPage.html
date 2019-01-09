@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:include="web/layout :: head"></th:block>
+</head>
+<body class="page-read">
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+
+    <section class="truyen-main">
+        <section class="truyen-section section-featured">
+            <section class="container mb-4 mt-5">
+                <section class="featured-content">
+                    <section class="row">
+                        <section class="col-12">
+                            <section id="navbar-custom">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs nav-custom" role="tablist">
+                                    <li class="nav-item active">
+                                        <a class="nav-link active" data-toggle="tab" href="#truyen-detail-introduction"
+                                           role="tab">
+                                            Thông Báo
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#truyen-detail-story" role="tab"
+                                           th:onclick="|storypostby(${user.uID},1)|">
+                                            Truyện đã đăng
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes {Fade}  -->
+                                <section class="tab-content">
+                                    <section class="tab-pane tab-pane-custom fade show active" id="truyen-detail-introduction"
+                                             name="truyen-detail-introduction" role="tabpanel">
+                                        <section class="row">
+                                            <section class="col-sm-12 col-md-4 col-lg-3">
+                                                <div class="truyen-detail-sidebar">
+                                                    <div class="block block-normal">
+                                                        <div class="block-content">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="block-detail-sidebar-author text-center">
+                                                                        <div class="info"><a href="#" class="avatar">
+                                                                            <img class="img-fluid lazyload"
+                                                                                 th:data-src="${user.UAvatar}"> </a>
+                                                                            <h2 class="name" th:text="${title}"></h2>
+                                                                        </div>
+                                                                        <ul class="list-unstyled truyen-author-badge"></ul>
+                                                                        <div class="overview"><span class="cap-3">Ngày Tham Gia: <span
+                                                                                th:text="${#dates.format(user.createDate, 'dd-MM-yyyy')}"></span></span>
+                                                                        </div>
+                                                                        <div class="statistic">
+                                                                            <div class="row">
+                                                                                <div class="col-6">
+                                                                                    <div class="item">
+                                                                                        <span class="item-icon">
+                                                                                            <i class="truyen-icon icon-book"></i>
+                                                                                        </span>
+                                                                                        <span class="item-value"
+                                                                                              th:text="${countStory}"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-6">
+                                                                                    <div class="item"><span
+                                                                                            class="item-icon"> <i
+                                                                                            class="truyen-icon icon-list"></i> </span>
+                                                                                        <span class="item-value"
+                                                                                              th:text="${countChapter}"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            <section class="col-sm-12 col-md-8 col-lg-9">
+                                                <div class="alert alert-primary" role="alert">
+                                                    <h5 th:if="${user.notification != null}"
+                                                        th:text="${user.notification}"></h5>
+                                                    <h5 th:unless="${user.notification != null}">Không có thông báo gì
+                                                        mới</h5>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </section>
+                                    <section class="tab-pane tab-pane-custom fade" id="truyen-detail-story" name="truyen-detail-story"
+                                             role="tabpanel">
+                                        <section class="truyen-detail-chap" id="truyen-detail-chap">
+                                            <div class="text-center">
+                                                <img class="img-fluid" th:src="@{/images/loading.gif}" alt="">
+                                            </div>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+</body>
+</html>

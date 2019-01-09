@@ -1,0 +1,83 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+management:
+  server:
+    port: 8090
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    shutdown:
+      enabled: true
+logging:
+  file: logs/mylog.log
+  level:
+    org:
+      hibernate:
+        SQL: debug
+      springframework:
+        web: debug
+  pattern:
+    console: ' %red(%d{dd/MM/yy HH:mm:ss}) %highlight(%-5level) [%blue(%t)] %yellow(%C{15}): %msg%n%throwable'
+    file: '%d{dd/MM/yyyy HH:mm:ss} %-5level [%thread] %logger{115} - %msg%n'
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ''
+    url: jdbc:mysql://localhost:3306/truyendb?useUnicode=yes&characterEncoding=UTF-8
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        enable_lazy_load_no_trans: true
+    show-sql: false
+  mail:
+    username: ENC(tscEVMqgmSxRw4uYsNth806pPasPRergkWiWk6zsBFsTDnhksx+o2g==)
+    password: ENC(LqPLjbf3shNzETevnEeAROgHEyXSgSEr)
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+  messages:
+    encoding: UTF-8
+
+jasypt:
+  encryptor:
+    password: MY_PASS
+
+cloudinary:
+  cloudname: thang1988
+  apisecret: 6F9_JE1MRDRFdToI1R9KyA7eV4s
+  apikey: 313624279364216

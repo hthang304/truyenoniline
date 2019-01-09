@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:include="web/layout :: head"></th:block>
+    <script type="text/javascript" th:src="@{/js/ajaxupload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/AccountAngularJS.js}"></script>
+</head>
+<body ng-app="ngApp">
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper" ng-controller="myAccount">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main">
+        <section class="truyen-section section-featured">
+            <section class="container">
+                <section class="featured-content" id="content">
+                    <section class="row">
+                        <th:block th:include="web/account/navbar_left :: navbar-left"></th:block>
+                        <section class="col-lg-10 col-md-9">
+                            <section class="row">
+                                <div class="col-md-6 mb-5">
+                                    <div class="mb-3 border-bottom">
+                                        <h4><span class="fas fa-user" style="" aria-hidden="true"></span> Thông tin
+                                            tài khoản</h4>
+                                    </div>
+                                    <div class="media">
+                                        <div class="mr-2" style=" position: relative">
+                                            <a>
+                                                <img class="img-thumbnail lazyload"
+                                                     width="210px"
+                                                     th:data-src="${user.UAvatar}"
+                                                     alt="Avatar" id="imgavatar">
+                                            </a>
+                                            <button id="upload" style="position: absolute;top:0px">Đổi</button>
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="text-muted">ID: <strong th:text="${user.uID}"></strong>
+                                            </p>
+                                            <p class="text-muted">Ngoại hiệu:
+                                                <strong th:if="${user.uDname== null || #strings.isEmpty(user.uDname)}">Bạn
+                                                    chưa có Ngoại hiêuj</strong>
+                                                <strong th:unless="${user.uDname== null || #strings.isEmpty(user.uDname)}"
+                                                        th:text="${user.uDname}"></strong>
+                                            </p>
+                                            <p class="text-muted">Đã đăng <strong class="text-primary"
+                                                                                  th:text="${countStory}"></strong>
+                                                truyện và <strong class="text-primary" th:text="${countChapter}">
+                                                </strong> chương
+                                            </p>
+                                            <p class="text-muted">Tài sản: <strong class="text-primary"
+                                                                                   th:text="${user.gold}"></strong>
+                                                đậu
+                                            <p class="text-muted">Đổi avatar lần đầu sẽ không tốn đậu, những lần
+                                                sau tốn 1000 đậu</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <div class="mb-3 border-bottom">
+                                        <h4><span class="fas fa-user" aria-hidden="true"></span> Cập nhật thông báo</h4>
+                                    </div>
+                                    <p class="text-muted mb-2">Hạn chế dùng link trong thông báo, muốn dùng link hãy
+                                        dùng bit.ly hoặc goo.gl để rút gọn link trước khi đưa vào thông báo</p>
+                                    <form class="form-horizontal" id="frmupdateabout" name="frmupdateabout"
+                                          ng-submit="updateNotification()">
+                                        <textarea id="txtAbout" class="form-control" name="txtAbout" rows="3"
+                                                  style="width: 100%;"
+                                                  th:text="${user.notification!= null?user.notification:'' }"></textarea>
+                                        <div class="pad-top-10">&nbsp;</div>
+                                        <button type="submit" class="btn btn btn-primary">Cập nhật</button>
+                                    </form>
+                                    <div class="clearfix clear-columns"></div>
+                                </div>
+                                <div class="col-md-6 mb-5">
+                                    <div class="mb-3 border-bottom">
+                                        <h4><span class="fas fa-user" aria-hidden="true"></span> Đổi ngoại hiệu</h4>
+                                    </div>
+                                    <p class="text-muted mb-2">Ngoại hiệu hiện tại:
+                                        <strong th:if="${user.uDname== null || #strings.isEmpty(user.uDname)}">Bạn chưa
+                                            có Ngoại hiệu</strong>
+                                        <strong th:unless="${user.uDname== null || #strings.isEmpty(user.uDname)}"
+                                                th:text="${user.uDname}"></strong>
+                                    </p>
+                                    <p class="text-muted mb-2">Việc đổi tên sẽ mất 2000 đậu, bạn đang
+                                        có <strong th:text="${user.gold}"></strong> đậu</p>
+                                    <p class="text-muted">Ngoại hiệu mới không dài quá 25 ký tự</p>
+                                    <form class="form-horizontal" id="frmChangeNick" name="frmChangeNick"
+                                          ng-submit="changeNick()">
+                                        <div class="form-group">
+                                            <label for="nickname" type="text" class="pl-0 col-sm-4 text-muted">Ngoại
+                                                hiệu mới</label>
+                                            <div class="col-sm-8 col-xs-10 pl-0">
+                                                <input type="text" class="form-control" name="txtChangenick"
+                                                       id="txtChangenick">
+                                            </div>
+                                            <button type="submit" class="btn btn btn-primary col-sm-2 col-xs-2 mt-2"
+                                                    name="btnChangenick" id="btnChangenick">Đổi
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+</body>
+</html>

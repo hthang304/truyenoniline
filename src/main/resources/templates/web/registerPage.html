@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:include="web/layout :: head"></th:block>
+</head>
+<body class="page-login">
+<script type="text/javascript" sec:authorize="isAuthenticated()" `>
+    window.location = '[[@{/}]]';
+</script>
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main">
+        <div id="content" class="container">
+            <div class="row">
+                <section class="login-block">
+                    <section class="container">
+                        <section class="row truyen-login-row">
+                            <section class="col-md-4 login-sec">
+                                <h2 class="text-center text-uppercase">Đăng ký</h2>
+                                <form id="registerForm" class="form-horizontal" method='POST'
+                                      th:object="${user}" th:action="@{/dang-ky}">
+                                    <section class="form-group">
+                                        <label class="text-uppercase">Tài khoản: </label>
+                                        <input type="text" autofocus="autofocus" id="uName"
+                                               th:class="${#fields.hasErrors('uName')}? 'form-control is-invalid' : 'form-control'"
+                                               th:field="*{uName}"/>
+                                        <span th:if="${#fields.hasErrors('uName')}"
+                                              th:errors="*{uName}" class="invalid-feedback"></span>
+                                    </section>
+                                    <section class="form-group">
+                                        <label class="text-uppercase">Mật Khẩu: </label>
+                                        <input type="password" autofocus="autofocus" id="passwordRegister"
+                                               th:class="${#fields.hasErrors('passwordRegister')}? 'form-control is-invalid' : 'form-control'"
+                                               th:field="*{passwordRegister}"/>
+                                        <span th:if="${#fields.hasErrors('passwordRegister')}"
+                                              th:errors="*{passwordRegister}"
+                                              class="error invalid-feedback"></span>
+                                    </section>
+                                    <section class="form-group">
+                                        <label class="text-uppercase">Nhập Lại Mật Khẩu: </label>
+                                        <input type="password" autofocus="autofocus" id="passwordRegisterConfirm"
+                                               th:class="${#fields.hasErrors('passwordRegisterConfirm')}? 'form-control is-invalid' : 'form-control'"
+                                               th:field="*{passwordRegisterConfirm}"/>
+                                        <span th:if="${#fields.hasErrors('passwordRegisterConfirm')}"
+                                              th:errors="*{passwordRegisterConfirm}"
+                                              class="error invalid-feedback"></span>
+                                    </section>
+                                    <section class="form-group">
+                                        <label class="text-uppercase">Email: </label>
+                                        <input type="text" autofocus="autofocus" id="uEmail"
+                                               th:class="${#fields.hasErrors('uEmail')}? 'form-control is-invalid' : 'form-control'"
+                                               th:field="*{uEmail}"/>
+                                        <span th:if="${#fields.hasErrors('uEmail')}" th:errors="*{uEmail}"
+                                              class="error invalid-feedback"></span>
+                                    </section>
+                                    <section class="form-group form-check">
+                                        <label></label>
+                                        <button type="submit" class="btn btn-truyen float-right"
+                                                name="submit">Đăng Ký
+                                        </button>
+                                    </section>
+                                    <section class=" form-check mt-4 text-center">
+                                        Bạn đã có tài khoản? <a th:href="@{/dang-nhap}">Đăng nhập
+                                        ngay</a>
+                                    </section>
+                                </form>
+                            </section>
+                            <section class="col-md-8 banner-sec pl-0 pr-0">
+                                <section id="carouselExampleIndicators" class="carousel slide"
+                                         data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                                            class="active"></li>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                    </ol>
+                                    <section class="carousel-inner" role="listbox">
+                                        <section class="carousel-item active">
+                                            <img class="d-block img-fluid"
+                                                 th:src="@{images/login-slide-1.jpg}" alt="First slide">
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="carousel-item">
+                                            <img class="d-block img-fluid"
+                                                 th:src="@{images/login-slide-2.jpg}" alt="First slide">
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="carousel-item">
+                                            <img class="d-block img-fluid"
+                                                 th:src="@{images/login-slide-3.jpg}" alt="First slide">
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            $("#registerForm").validate({
+                rules: {
+                    uName: "required",
+                    passwordRegister: {
+                        required: true,
+                        rangelength: [6, 13]
+                    },
+                    passwordRegisterConfirm: {
+                        required: true,
+                        rangelength: [6, 13],
+                        equalTo: "#passwordRegister"
+                    },
+                    uEmail: {
+                        required: true,
+                        email: true
+                    },
+                },
+                messages: {
+                    uName: "Tài khoản không được để trống",
+                    passwordRegister: {
+                        required: "Password không được để trống",
+                        rangelength: "Password có độ dài từ 6-13. Phân biệt hoa thường",
+                    },
+                    passwordRegisterConfirm: {
+                        required: "Password Confirm không được để trống",
+                        rangelength: "Password Confirm có độ dài từ 6-13. Phân biệt hoa thường",
+                        equalTo: "Password Confirm không chính xác"
+                    },
+                    uEmail: "Email không đúng định dạng"
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+        })
+    </script>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+</body>
+</html>

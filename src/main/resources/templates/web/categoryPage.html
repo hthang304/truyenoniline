@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:include="web/layout :: head"></th:block>
+</head>
+<body>
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main" th:if="${listStory == null || #lists.isEmpty(listStory)}">
+        <section class="truyen-section section-featured">
+            <section id="content" class="container mb-4">
+                <section class="featured-content">
+                    <section class="row align-items-center">
+                        <section class="error-card">
+                            <section class="error-title-block">
+                                <h2 class="error-sub-title shadow-1"> Chưa Có Truyên nào thuộc thể loại này</h2>
+                            </section>
+                            <section class="error-container text-center mt-4">
+                                <a class="btn btn-truyen" th:href="@{/}"><i
+                                        class="fa fa-angle-left"></i> Trở về Trang Chủ</a>
+                            </section>
+                            <script>
+                                $(document).ready(function () {
+                                    $('.error-title-block').addClass('animated flipInY');
+                                    $('.error-container').addClass('animated fadeInUp');
+                                })
+                            </script>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <section class="truyen-main" th:unless="${listStory == null || #lists.isEmpty(listStory)}">
+        <section class="container">
+            <section class="truyen-section section-featured">
+
+                <section class="featured-content">
+                    <section class="row">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="block block-editors-choice-slider">
+                                <div class="block-content">
+                                    <div class="editors-choice-slider js-editors-choice-slider">
+                                        <h2 class="shadow-1">ĐỌC NHIỀU TRONG TUẦN</h2>
+                                        <div class="swiper-container swiper-container-horizontal">
+                                            <div class="swiper-wrapper"
+                                                 style="transform: translate3d(-1128px, 0px, 0px); transition-duration: 0ms;">
+                                                <div class="swiper-slide" style="width: 346px; margin-right: 30px;"
+                                                     th:each="topstory,iterStat : ${topview}"
+                                                     th:if="${iterStat.index < 4}">
+                                                    <div class="item">
+                                                        <div class="thumb">
+                                                            <a th:href="@{'/truyen/'+${topstory.sID}}"
+                                                               th:title="${topstory.vnName}">
+                                                                <img class="img-fluid lazyload" alt=""
+                                                                     th:data-src="${topstory.sImages}"
+                                                                     th:title="${topstory.vnName}">
+                                                            </a>
+                                                        </div>
+                                                        <div class="info" style="">
+                                                            <h2 class="title">
+                                                                <a th:href="@{'/truyen/'+${topstory.sID}}"
+                                                                   th:title="${topstory.vnName}"
+                                                                   th:text="${topstory.vnName}"></a>
+                                                            </h2>
+                                                            <p class="description text-center"
+                                                               th:text="${topstory.sInfo}"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
+                                                <span class="swiper-pagination-bullet"></span>
+                                                <span class="swiper-pagination-bullet"></span>
+                                                <span class="swiper-pagination-bullet"></span>
+                                                <span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+                                                <span class="swiper-pagination-bullet"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="block">
+                                <div class="block-content">
+                                    <div class="editors-choice-list">
+                                        <div class="row">
+                                            <th:block th:each="topstory,iterStat : ${topview}"
+                                                      th:if="${4<=iterStat.index}">
+                                                <div class="col-12 col-sm-12 col-md-6 btv-2">
+                                                    <div class="item">
+                                                        <h2 class="title">
+                                                            <a th:href="@{'/truyen/'+${topstory.sID}}"
+                                                               th:title="${topstory.vnName}"
+                                                               th:text="${topstory.vnName}"></a>
+                                                        </h2>
+                                                        <div class="view text-secondary"><span
+                                                                class="text-red fz-16" th:text="${topstory.cnt}"></span>
+                                                            người truy cập
+                                                        </div>
+                                                        <p class="description" th:text="${topstory.SInfo}"></p>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                            <div class="clearfix hidden-xs"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-4">
+                            <div class="block block-default block-readers-choice">
+                                <div class="block-header"><h2 class="title"> Top Tháng </h2></div>
+                                <div class="block-content">
+                                    <ul class="list-group">
+                                        <th:block th:each="topmonthstory,iterStats : ${topmonthview}">
+                                            <li class="list-group-item list-group-item-primary-me item-featured"
+                                                th:if="${iterStats.index == 0}">
+                                                <div class="content">
+                                                    <div class="index index-1 index-star"> 1</div>
+                                                    <div class="info">
+                                                        <h2 class="title">
+                                                            <a th:href="@{'/truyen/'+${topmonthstory.sID}}"
+                                                               th:title="${topmonthstory.vnName}"
+                                                               th:text="${topmonthstory.vnName}"></a>
+                                                        </h2>
+                                                        <div class="view text-secondary">
+                                                        <span class="text-red fz-16"
+                                                              th:text="${topmonthstory.cnt}"></span> lượt
+                                                        </div>
+                                                        <div class="extra-info">
+                                                            <p>Thể Loại:
+                                                                <a th:href="@{'/the-loai/'+${topmonthstory.cID}}"
+                                                                   th:text="${topmonthstory.CName}"></a>
+                                                            </p>
+                                                            <p>Tác giả: <span th:text="${topmonthstory.sAuthor}"></span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="thumb">
+                                                        <div class="book-cover">
+                                                            <a class="book-cover-link"
+                                                               th:href="@{'/truyen/'+${topmonthstory.sID} }"
+                                                               th:title="${topmonthstory.vnName}">
+                                                                <img th:src="@{${topmonthstory.sImages}}"
+                                                                     th:alt="${topmonthstory.vnName}">
+                                                            </a> <span class="book-cover-shadow"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item list-group-item-primary-me"
+                                                th:unless="${iterStats.index == 0}">
+                                                <div class="content">
+                                                    <div th:class="'index index-'+${iterStats.index+1}+' index-star'"
+                                                         th:text="${iterStats.index+1}"></div>
+                                                    <div class="info">
+                                                        <h2 class="title">
+                                                            <a th:href="@{'/truyen/'+${topmonthstory.sID} }"
+                                                               th:title="${topmonthstory.vnName}"
+                                                               th:text="${topmonthstory.vnName}"></a>
+                                                        </h2>
+                                                        <div class="view text-secondary"
+                                                             th:text="${topmonthstory.cnt}"></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </section>
+
+            <section class="truyen-section mb-4">
+                <section class="featured-content">
+                    <section class="row">
+                        <div class="col-12">
+                            <div class="block block-default block-list-new">
+                                <div class="block-header">
+                                    <h2 class="title text-uppercase"
+                                        th:text="${title}"></h2>
+                                </div>
+                                <div class="block-content" id="dataTable">
+                                    <ul class="list-group">
+                                        <li class="list-group-item list-group-item-table"
+                                            th:each="story : ${listStory}">
+                                            <div class="content">
+                                                <a class="thumb"
+                                                   th:href="@{'/truyen/'+${story.sID}}">
+                                                    <img class="img-fluid lazyload"
+                                                         th:data-src="${story.sImages}"
+                                                         th:alt="${story.vnName}">
+                                                </a>
+                                                <div class="info">
+                                                    <h2 class="title">
+                                                        <a th:href="@{'/truyen/'+${story.sID}}"
+                                                           th:title="${story.vnName}">
+                                                            <img class="img-fluid"
+                                                                 th:if="${story.SDealStatus == 1}"
+                                                                 th:src="@{/images/vip-vip.gif}">
+                                                            <span th:class="${story.SDealStatus == 1}?'shadow-2' : ''"
+                                                                  th:text="${story.vnName}"></span>
+                                                        </a>
+                                                    </h2>
+                                                    <div class="chap" th:text="${story.sAuthor}"></div>
+                                                    <div class="author">
+                                                        <a th:if="${story.chID != null}"
+                                                           th:href="@{'/truyen/'+${story.sID}+'/chuong-'+${story.chID}}"
+                                                           th:title="'Chương ' + ${story.chNumber}"
+                                                           th:text="'Chương '+ ${story.chNumber}"></a>
+                                                        <a th:unless="${story.chID != null}">&nbsp;</a>
+                                                        <small class="d-none d-sm-inline-block"
+                                                               th:if="${story.chID != null}"
+                                                               th:text="' - ' + ${story.timeUpdate}"></small>
+                                                    </div>
+                                                    <div class="time">
+                                                        <span class="d-none d-sm-block"
+                                                              th:if="${story.chID != null}"
+                                                              th:text="${story.UDname}"></span>
+                                                        <span class="d-block d-sm-none"
+                                                              th:text="${story.timeUpdate}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <section th:if="${totalIndex > 1}">
+                                        <ul class="pagination justify-content-end mb-3 mt-3">
+                                            <li th:if="${currentIndex != 1}" class="page-item">
+                                                <a class="page-link" title="Trang Đầu"
+                                                   th:href="@{''+${urlIndex} + '/trang-1'}">
+                                                    <i class="fas fa-backward fa-sm"></i>
+                                                </a>
+                                            </li>
+                                            <li th:if="${currentIndex != 1}" class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{''+${urlIndex} + '/trang-'+${currentIndex-1}}">
+                                                    <i class="fas fa-step-backward fa-sm"></i>
+                                                </a>
+                                            </li>
+                                            <th:block th:each="i : ${#numbers.sequence( beginIndex, endIndex)}">
+                                                <li class="page-item active" th:if="${i == currentIndex}">
+                                                    <a class="page-link disabled"
+                                                       th:href="@{''+${urlIndex} + '/trang-'+${i}}"
+                                                       th:text="${i}"></a></li>
+                                                <li class="page-item" th:unless="${i == currentIndex}"><a
+                                                        class="page-link"
+                                                        th:href="@{''+${urlIndex} + '/trang-'+${i}}"
+                                                        th:text="${i}"></a></li>
+                                            </th:block>
+                                            <li th:if="${currentIndex != totalIndex}" class="page-item">
+                                                <a class="page-link"
+                                                   th:href="@{''+${urlIndex} + '/trang-'+${currentIndex+1}}">
+                                                    <i class="fas fa-step-forward fa-sm"></i>
+                                                </a>
+                                            </li>
+                                            <li th:if="${currentIndex != totalIndex}" class="page-item">
+                                                <a class="page-link" title="Trang Cuối"
+                                                   th:href="@{''+${urlIndex} + '/trang-'+${totalIndex}}">
+                                                    <i class="fas fa-forward fa-sm"></i>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <th:block th:include="web/layout :: head"></th:block>
+</head>
+<body class="page-login">
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main">
+        <script type="text/javascript" sec:authorize="isAuthenticated()" `>
+            window.location = '[[@{/}]]';
+        </script>
+        <div id="content" class="container">
+            <div class="row">
+                <section class="login-block">
+                    <section class="container">
+                        <section class="row truyen-login-row">
+                            <section class="col-md-4 login-sec">
+                                <h2 class="text-center text-uppercase">Đăng nhập</h2>
+                                <form id="signupForm" class="login-form" name='loginForm'
+                                      th:action="@{j_spring_security_check}" method='POST'>
+                                    <section class="form-group"
+                                             th:if="${param.error} and ${session}"
+                                             th:with="errorMsg=${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+                                        <div class="alert alert-danger" role="alert"
+                                             th:text="${errorMsg}"></div>
+                                    </section>
+                                    <section class="form-group" th:if="${success != null}">
+                                        <div class="alert alert-success" role="alert"
+                                             th:text="${success}"></div>
+                                    </section>
+                                    <section class="form-group">
+                                        <label for="exampleInputEmail1" class="text-uppercase">
+                                            Tài khoản
+                                        </label>
+                                        <input type="text" class="form-control" name="username"
+                                               id="username" placeholder="" autofocus="autofocus">
+                                    </section>
+                                    <section class="form-group">
+                                        <div class="clearfix">
+                                            <label for="exampleInputPassword1" class="text-uppercase">Mật
+                                                khẩu</label>
+                                            <a class="float-right" th:href="@{/quen-mat-khau}">Quên mật khẩu</a>
+                                        </div>
+                                        <input type="password" class="form-control" name="password" id="password"/>
+                                    </section>
+                                    <section class="form-check">
+                                        <label class="form-check-label mt-2"> <input
+                                                type="checkbox" class="form-check-input" name="remember-me"/>
+                                            <small>Ghi nhớ đăng nhập</small>
+                                        </label>
+                                        <button type="submit" class="btn btn-truyen float-right"
+                                                name="submit">Đăng nhập
+                                        </button>
+                                    </section>
+                                    <section class="form-check mt-3 text-center">
+                                        Bạn chưa có tài khoản? <a th:href="@{/dang-ky}">Đăng ký
+                                        ngay</a>
+                                    </section>
+                                    <input type="hidden" name="${_csrf.parameterName}"
+                                           value="${_csrf.token}"/>
+                                </form>
+                            </section>
+                            <section class="col-md-8 banner-sec pl-0 pr-0">
+                                <section id="carouselExampleIndicators" class="carousel slide"
+                                         data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                                            class="active"></li>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                    </ol>
+                                    <section class="carousel-inner" role="listbox">
+                                        <section class="carousel-item active">
+                                            <img class="d-block img-fluid lazyload"
+                                                 th:data-src="@{images/login-slide-1.jpg}" alt="First slide">
+                                            <noscript>
+                                                <img class="d-block img-fluid"
+                                                     th:src="@{images/login-slide-1.jpg}" alt="First slide">
+                                            </noscript>
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="carousel-item">
+                                            <img class="d-block img-fluid lazyload"
+                                                 th:data-src="@{images/login-slide-2.jpg}" alt="First slide">
+                                            <noscript>
+                                                <img class="d-block img-fluid"
+                                                     th:src="@{images/login-slide-2.jpg}" alt="First slide">
+                                            </noscript>
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="carousel-item">
+                                            <img class="d-block img-fluid lazyload"
+                                                 th:data-src="@{images/login-slide-3.jpg}" alt="First slide">
+                                            <noscript>
+                                                <img class="d-block img-fluid"
+                                                     th:src="@{images/login-slide-3.jpg}" alt="First slide">
+                                            </noscript>
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            $("#signupForm").validate({
+                rules: {
+                    username: "required",
+                    password: "required"
+                },
+                messages: {
+                    username: "Tài khoản không được để trống",
+                    password: "Mật khẩu không được để trống"
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+        })
+    </script>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+</body>
+</html>

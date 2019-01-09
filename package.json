@@ -1,0 +1,22 @@
+{
+  "name": "truyenonline",
+  "version": "1.0.0",
+  "description": "Truyện Online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhubang8x/truyenonline.git"
+  },
+  "author": "Nguyễn Huy Thắng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhubang8x/truyenonline/issues"
+  },
+  "homepage": "https://github.com/nhubang8x/truyenonline#readme",
+  "dependencies": {
+    "bower": "^1.8.4"
+  }
+}

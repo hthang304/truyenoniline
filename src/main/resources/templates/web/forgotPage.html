@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <th:block th:include="web/layout :: head"></th:block>
+</head>
+<body class="page-login">
+<script type="text/javascript" sec:authorize="isAuthenticated()" `>
+    window.location = '[[@{/}]]';
+</script>
+<th:block th:include="web/layout :: loading"></th:block>
+<section class="page-wrapper">
+    <th:block th:include="web/layout :: navbar"></th:block>
+    <section class="truyen-main">
+        <div id="content" class="container">
+            <div class="row">
+                <section class="login-block">
+                    <section class="container">
+                        <section class="row truyen-login-row">
+                            <section class="col-md-4 login-sec">
+                                <h2 class="text-center text-uppercase">Quên mật khẩu</h2>
+                                <form id="rePassword" action="#" method="POST" class="form-horizontal"
+                                      th:object="${user}" th:action="@{/quen-mat-khau}">
+                                    <section class="form-group" th:if="${error != null}">
+                                        <div class="alert alert-danger" role="alert"
+                                             th:text="${error}"></div>
+                                    </section>
+                                    <section class="form-group">
+                                        <label class="text-uppercase">Tài khoản: </label>
+                                        <input type="text" autofocus="autofocus" id="username"
+                                               th:class="${#fields.hasErrors('username')}? 'form-control is-invalid' : 'form-control'"
+                                               th:field="*{username}"/>
+                                        <span th:if="${#fields.hasErrors('username')}"
+                                              th:errors="*{username}" class="error invalid-feedback"></span>
+                                    </section>
+                                    <section class="form-group">
+                                        <label class="text-uppercase">Email: </label>
+                                        <input id="email" type="text" autofocus="autofocus" class="form-control"
+                                               th:class="${#fields.hasErrors('email')}? 'form-control is-invalid' : 'form-control'"
+                                               th:field="*{email}"/>
+                                        <span th:if="${#fields.hasErrors('email')}"
+                                              th:errors="*{email}" class="error invalid-feedback"></span>
+                                    </section>
+                                    <section class="form-check">
+                                        <button type="submit" class="btn btn-truyen float-right"
+                                                name="submit">Gửi Mật Khẩu
+                                        </button>
+                                    </section>
+                                </form>
+                            </section>
+                            <section class="col-md-8 banner-sec pl-0 pr-0">
+                                <section id="carouselExampleIndicators" class="carousel slide"
+                                         data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                                            class="active"></li>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                    </ol>
+                                    <section class="carousel-inner" role="listbox">
+                                        <section class="carousel-item active">
+                                            <img class="d-block img-fluid"
+                                                 th:src="@{images/login-slide-1.jpg}" alt="First slide">
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="carousel-item">
+                                            <img class="d-block img-fluid"
+                                                 th:src="@{images/login-slide-2.jpg}" alt="First slide">
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                        <section class="carousel-item">
+                                            <img class="d-block img-fluid"
+                                                 th:src="@{images/login-slide-3.jpg}" alt="First slide">
+                                            <section class="carousel-caption d-none d-md-block">
+                                                <section class="banner-text">
+                                                    <h2>This is Heaven</h2>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                        elit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                                        exercitation</p>
+                                                </section>
+                                            </section>
+                                        </section>
+                                    </section>
+                                </section>
+                            </section>
+                        </section>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            $("#rePassword").validate({
+                rules: {
+                    username: "required",
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                },
+                messages: {
+                    username: "Tài khoản không được để trống",
+                    email: "Email không đúng định dạng"
+                },
+                errorElement: "em",
+                errorPlacement: function (error, element) {
+                    // Add the `invalid-feedback` class to the error element
+                    error.addClass("invalid-feedback");
+                    if (element.prop("type") === "checkbox") {
+                        error.insertAfter(element.next("label"));
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                }
+            });
+        })
+    </script>
+    <th:block th:include="web/layout :: footer"></th:block>
+</section>
+</body>
+</html>
